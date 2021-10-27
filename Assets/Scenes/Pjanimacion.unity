@@ -726,7 +726,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 632dff1362719a945a6632b66d46292d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  intervalo: 1.2
+  intervalo: 1.4
   obstaculo: {fileID: 5869351946071242862, guid: 7eee6d34df0866747adb7efc93c38d83, type: 3}
   altura: 0.5
 --- !u!1 &1017822402
