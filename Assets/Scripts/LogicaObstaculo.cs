@@ -5,6 +5,7 @@ using UnityEngine;
 public class LogicaObstaculo : MonoBehaviour
 {
     public float velocidad = 1;
+    public GameObject suelo;
 
     // Update is called once per frame
     void Update()

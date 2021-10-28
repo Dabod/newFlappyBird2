@@ -5,11 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class ControladorEscena : MonoBehaviour
 {
+    public GameObject pj;
+    public GameObject pjMenuAnimacion;
     public GameObject canvasMenu;
     public GameObject canvasScore;
     public GameObject canvasPerder;
     public GameObject botonPlay;
-    public AudioSource audio;
+    public AudioSource musica;
     public Animator terrainAnim;
     public Animator birdAnim;
     public Sprite playSprite;
@@ -20,6 +22,7 @@ public class ControladorEscena : MonoBehaviour
     void Start()
     {
         Time.timeScale = 0;
+        pj.GetComponent<SpriteRenderer>().enabled = false;
     }
 
     public void Play()
@@ -28,8 +31,10 @@ public class ControladorEscena : MonoBehaviour
         {
             Reiniciar();
         }
-        terrainAnim.updateMode = UnityEngine.AnimatorUpdateMode.UnscaledTime;
+        pjMenuAnimacion.SetActive(false);
+        pj.GetComponent<SpriteRenderer>().enabled = true;
         Time.timeScale = 1;
+        musica.Play();
         canvasScore.SetActive(true);
         canvasMenu.SetActive(false);
         botonPlay.SetActive(false);
@@ -39,7 +44,7 @@ public class ControladorEscena : MonoBehaviour
     public void Perder()
     {
         canvasPerder.SetActive(true);
-        audio.Stop();
+        musica.Stop();
         botonPlay.GetComponent<UnityEngine.UI.Image>().sprite = menuSprite;
         //btnSize.rect.width;
         //botonPlay.GetComponent<RectTransform>().sizeDelta()

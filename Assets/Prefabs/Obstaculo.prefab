@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 483103527}
   - component: {fileID: 483103526}
   m_Layer: 0
-  m_Name: Sonido Puntuacion
+  m_Name: SonidoPuntuacion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -463,4 +463,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 634d27e684c2e874885af92470b1d6e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocidad: 0.8
+  velocidad: 0.85
