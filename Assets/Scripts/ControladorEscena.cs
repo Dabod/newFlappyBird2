@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class ControladorEscena : MonoBehaviour
 {
+    public GameObject pj;
+    public GameObject pjMenuAnimacion;
     public GameObject canvasMenu;
     public GameObject canvasScore;
     public GameObject canvasPerder;
@@ -20,6 +22,7 @@ public class ControladorEscena : MonoBehaviour
     void Start()
     {
         Time.timeScale = 0;
+        pj.GetComponent<SpriteRenderer>().enabled = false;
     }
 
     public void Play()
@@ -28,6 +31,8 @@ public class ControladorEscena : MonoBehaviour
         {
             Reiniciar();
         }
+        pjMenuAnimacion.SetActive(false);
+        pj.GetComponent<SpriteRenderer>().enabled = true;
         Time.timeScale = 1;
         musica.Play();
         canvasScore.SetActive(true);
