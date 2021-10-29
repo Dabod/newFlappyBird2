@@ -5,7 +5,6 @@ using UnityEngine;
 public class LogicaPersonaje : MonoBehaviour
 {
     public float velocity = 1.6f;
-    public float rotationSpeed = 2;
     private Rigidbody2D rb;
     public Animator animator;
     public ControladorEscena controladorEscena;
@@ -20,15 +19,10 @@ public class LogicaPersonaje : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Time.timeScale == 1)
-        {
-            animator.SetBool("playing", true);
-        }
-
         if (Input.GetMouseButtonDown(0))
         {
             rb.velocity = Vector2.up * velocity;
-            rb.transform.Rotate(Vector3.up * (rotationSpeed * Time.deltaTime)); //Esto esta mal, no fa res bro
+            //rb.transform.eulerAngles = Vector3.forward * 20;
             animator.SetTrigger("Tap");
         }
     }

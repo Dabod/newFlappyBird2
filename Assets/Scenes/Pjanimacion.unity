@@ -1578,7 +1578,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocity: 1.6
-  rotationSpeed: 1
   animator: {fileID: 0}
   controladorEscena: {fileID: 936248281}
 --- !u!1 &1603835653
