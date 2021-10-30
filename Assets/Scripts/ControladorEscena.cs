@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,9 +9,14 @@ public class ControladorEscena : MonoBehaviour
     public GameObject pj;
     public GameObject pjMenuAnimacion;
     public GameObject canvasMenu;
-    public GameObject canvasScore;
+    public GameObject canvasGameplay;
     public GameObject canvasPerder;
     public GameObject botonPlay;
+    public GameObject botonPause;
+    public GameObject botonMenu;
+    public GameObject botonReplay;
+    public GameObject bestScoreText;
+    public GameObject endScoreText;
     public GameObject squareFade;
     public AudioSource musica;
     public Animator bckLyrAnim;
@@ -21,11 +27,11 @@ public class ControladorEscena : MonoBehaviour
     public Sprite menuSprite;
     //public RectTransform btnSize;
     public bool btnPulsado = false;
+    private bool paused = false;
     // Start is called before the first frame update
     void Start()
     {
         Time.timeScale = 0;
-        pj.GetComponent<SpriteRenderer>().enabled = false;
     }
 
     public void Play()
@@ -39,10 +45,9 @@ public class ControladorEscena : MonoBehaviour
         Time.timeScale = 1;
         musica.Play();
         //StartCoroutine(esperaNegro());
-        canvasScore.SetActive(true);
+        canvasGameplay.SetActive(true);
         canvasMenu.SetActive(false);
         botonPlay.SetActive(false);
-        btnPulsado = true;
     }
     //IEnumerator esperaNegro()
     //{
@@ -51,18 +56,36 @@ public class ControladorEscena : MonoBehaviour
     //    squareFade.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 255);
     //}
 
+    public void PauseButton()
+    {
+        if (!paused)
+            Time.timeScale = 0;
+        else
+            Time.timeScale = 1;
+            paused = true;
+
+    }
+
     public void Perder()
     {
+        //Score Saving/Displaying
+        if(PlayerDataController.highScore < LogicaPuntuacion.score)
+        {
+            PlayerDataController.highScore = LogicaPuntuacion.score;
+            PlayerPrefs.SetInt("highScore", PlayerDataController.highScore);
+        }
+        endScoreText.GetComponent<TextMeshProUGUI>().text = LogicaPuntuacion.score.ToString();
+        bestScoreText.GetComponent<TextMeshProUGUI>().text = PlayerDataController.highScore.ToString();
+        //Canvas swap
+        canvasGameplay.SetActive(false);
         canvasPerder.SetActive(true);
+        //Music Stop
         musica.Stop();
-        botonPlay.GetComponent<UnityEngine.UI.Image>().sprite = menuSprite;
-        //btnSize.rect.width;
-        //botonPlay.GetComponent<RectTransform>().sizeDelta()
+        //Animation Stop
         bckLyrAnim.updateMode = UnityEngine.AnimatorUpdateMode.Normal;
         mdlLyrAnim.updateMode = UnityEngine.AnimatorUpdateMode.Normal;
         terrainAnim.updateMode = UnityEngine.AnimatorUpdateMode.Normal;
         birdAnim.updateMode = UnityEngine.AnimatorUpdateMode.Normal;
-        botonPlay.SetActive(true);
         Time.timeScale = 0;
     }
     

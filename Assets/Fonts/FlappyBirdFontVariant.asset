@@ -57,11 +57,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
-  m_Name: FlappyBirdFont
+  m_Name: FlappyBirdFontVariant
   m_EditorClassIdentifier: 
-  hashCode: 1847806748
+  hashCode: -1623994357
   material: {fileID: 5681153697862956755}
-  materialHashCode: 143078460
+  materialHashCode: -1220953397
   m_Version: 1.1.0
   m_SourceFontFileGUID: d2c2486445c77441d93fa52d70b87f41
   m_SourceFontFile_EditorRef: {fileID: 12800000, guid: d2c2486445c77441d93fa52d70b87f41, type: 3}
@@ -2530,10 +2530,10 @@ Material:
     m_Colors:
     - _ClipRect: {r: -32767, g: -32767, b: 32767, a: 32767}
     - _EnvMatrixRotation: {r: 0, g: 0, b: 0, a: 0}
-    - _FaceColor: {r: 1, g: 1, b: 1, a: 1}
+    - _FaceColor: {r: 0.97647065, g: 0.47450984, b: 0.3647059, a: 1}
     - _GlowColor: {r: 0, g: 1, b: 0, a: 0.5}
     - _MaskCoord: {r: 0, g: 0, b: 32767, a: 32767}
-    - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
+    - _OutlineColor: {r: 0.9647059, g: 0.92156863, b: 0.65882355, a: 1}
     - _ReflectFaceColor: {r: 0, g: 0, b: 0, a: 1}
     - _ReflectOutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
