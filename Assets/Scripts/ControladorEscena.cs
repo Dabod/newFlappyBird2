@@ -6,34 +6,38 @@ using UnityEngine.SceneManagement;
 
 public class ControladorEscena : MonoBehaviour
 {
-    //Game Objects
+    // Player
     public GameObject pj;
     public GameObject pjMenuAnimation;
+    // HUD
     public GameObject canvasMenu;
     public GameObject canvasGameplay;
     public GameObject canvasPauseMenu;
     public GameObject canvasGameOver;
+    // Buttons
     public GameObject botonPlay;
     public GameObject botonPause;
     public GameObject botonMenu;
     public GameObject botonPlayAgain;
+    // Text
     public GameObject bestScoreText;
     public GameObject endScoreText;
-    //Audio
+    public GameObject newBestScoreText;
+    // Audio
     public AudioSource music;
-    //Animators
+    // Animators
     public Animator bckLyrAnim;
     public Animator mdlLyrAnim;
     public Animator terrainAnim;
     public Animator birdAnim;
-    //Sprites
+    // Sprites
     public Sprite pauseSprite;
     public Sprite resumeSprite;
     public Sprite bronzeMedal;
     public Sprite silverMedal;
     public Sprite goldMedal;
     public Sprite platinumMedal;
-    //Booleans
+    // Booleans
     public static bool btnPulsado = false;
     public static bool paused = false;
     public static bool playing;
@@ -105,6 +109,8 @@ public class ControladorEscena : MonoBehaviour
         {
             PlayerDataController.highScore = LogicaPuntuacion.score;
             PlayerPrefs.SetInt("highScore", PlayerDataController.highScore);
+            PlayerPrefs.Save();
+            newBestScoreText.SetActive(true);
         }
         endScoreText.GetComponent<TextMeshProUGUI>().text = LogicaPuntuacion.score.ToString();
         bestScoreText.GetComponent<TextMeshProUGUI>().text = PlayerDataController.highScore.ToString();

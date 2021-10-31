@@ -19,6 +19,7 @@ public class LogicaPersonaje : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        transform.eulerAngles = new Vector3(0, 0, rb.velocity.y * 10f); //El personaje rota dependiendo de su velocidad
         //Condició apretar botó
         if (!ControladorEscena.btnPulsado) // Si no se esta pulsando un botón
         {
@@ -28,6 +29,8 @@ public class LogicaPersonaje : MonoBehaviour
                 {
                     rb.velocity = Vector2.up * velocity;
                     animator.SetTrigger("Tap");
+
+                    
                 }
             }
 
