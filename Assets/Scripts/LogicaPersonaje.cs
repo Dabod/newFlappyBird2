@@ -19,11 +19,22 @@ public class LogicaPersonaje : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        //Condició apretar botó
+        if (!ControladorEscena.btnPulsado) // Si no se esta pulsando un botón
         {
-            rb.velocity = Vector2.up * velocity;
-            //rb.transform.eulerAngles = Vector3.forward * 20;
-            animator.SetTrigger("Tap");
+            if (!ControladorEscena.paused) // Si no esta en pausa
+            {
+                if (Input.GetMouseButtonDown(0) && ControladorEscena.playing) // El personaje vuela hacia arriba
+                {
+                    rb.velocity = Vector2.up * velocity;
+                    animator.SetTrigger("Tap");
+                }
+            }
+
+        }
+        else
+        {
+            ControladorEscena.btnPulsado = false;
         }
     }
 

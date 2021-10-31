@@ -6,63 +6,95 @@ using UnityEngine.SceneManagement;
 
 public class ControladorEscena : MonoBehaviour
 {
+    //Game Objects
     public GameObject pj;
-    public GameObject pjMenuAnimacion;
+    public GameObject pjMenuAnimation;
     public GameObject canvasMenu;
     public GameObject canvasGameplay;
-    public GameObject canvasPerder;
+    public GameObject canvasPauseMenu;
+    public GameObject canvasGameOver;
     public GameObject botonPlay;
     public GameObject botonPause;
     public GameObject botonMenu;
-    public GameObject botonReplay;
+    public GameObject botonPlayAgain;
     public GameObject bestScoreText;
     public GameObject endScoreText;
-    public GameObject squareFade;
-    public AudioSource musica;
+    //Audio
+    public AudioSource music;
+    //Animators
     public Animator bckLyrAnim;
     public Animator mdlLyrAnim;
     public Animator terrainAnim;
     public Animator birdAnim;
-    public Sprite playSprite;
-    public Sprite menuSprite;
-    //public RectTransform btnSize;
-    public bool btnPulsado = false;
-    private bool paused = false;
+    //Sprites
+    public Sprite pauseSprite;
+    public Sprite resumeSprite;
+    public Sprite bronzeMedal;
+    public Sprite silverMedal;
+    public Sprite goldMedal;
+    public Sprite platinumMedal;
+    //Booleans
+    public static bool btnPulsado = false;
+    public static bool paused = false;
+    public static bool playing;
+
     // Start is called before the first frame update
     void Start()
     {
         Time.timeScale = 0;
+        playing = false;
     }
+
 
     public void Play()
     {
-        if (btnPulsado)
-        {
-            Reiniciar();
-        }
-        pjMenuAnimacion.SetActive(false);
+        playing = true;
+        pjMenuAnimation.SetActive(false);
         pj.GetComponent<SpriteRenderer>().enabled = true;
         Time.timeScale = 1;
-        musica.Play();
-        //StartCoroutine(esperaNegro());
+        music.Play();
         canvasGameplay.SetActive(true);
         canvasMenu.SetActive(false);
         botonPlay.SetActive(false);
     }
-    //IEnumerator esperaNegro()
-    //{
-    //    squareFade.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 255);
-    //    yield return new WaitForSeconds(0.1f);
-    //    squareFade.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 255);
-    //}
+
+    public void ButtonPressed()
+    {
+        btnPulsado = true;
+    }
+
+    void activateAnims()
+    {
+        bckLyrAnim.updateMode = UnityEngine.AnimatorUpdateMode.UnscaledTime;
+        mdlLyrAnim.updateMode = UnityEngine.AnimatorUpdateMode.UnscaledTime;
+        terrainAnim.updateMode = UnityEngine.AnimatorUpdateMode.UnscaledTime;
+        birdAnim.updateMode = UnityEngine.AnimatorUpdateMode.UnscaledTime;
+    }
+
+    void deactivateAnims()
+    {
+        bckLyrAnim.updateMode = UnityEngine.AnimatorUpdateMode.Normal;
+        mdlLyrAnim.updateMode = UnityEngine.AnimatorUpdateMode.Normal;
+        terrainAnim.updateMode = UnityEngine.AnimatorUpdateMode.Normal;
+        birdAnim.updateMode = UnityEngine.AnimatorUpdateMode.Normal;
+    }
 
     public void PauseButton()
     {
         if (!paused)
-            Time.timeScale = 0;
-        else
-            Time.timeScale = 1;
+        {
             paused = true;
+            Time.timeScale = 0;
+            deactivateAnims();
+            botonPause.GetComponent<UnityEngine.UI.Image>().sprite = resumeSprite;
+        }
+        else
+        {
+            Time.timeScale = 1;
+            activateAnims();
+            botonPause.GetComponent<UnityEngine.UI.Image>().sprite = pauseSprite;
+            paused = false;
+        }
 
     }
 
@@ -78,14 +110,11 @@ public class ControladorEscena : MonoBehaviour
         bestScoreText.GetComponent<TextMeshProUGUI>().text = PlayerDataController.highScore.ToString();
         //Canvas swap
         canvasGameplay.SetActive(false);
-        canvasPerder.SetActive(true);
+        canvasGameOver.SetActive(true);
         //Music Stop
-        musica.Stop();
+        music.Stop();
         //Animation Stop
-        bckLyrAnim.updateMode = UnityEngine.AnimatorUpdateMode.Normal;
-        mdlLyrAnim.updateMode = UnityEngine.AnimatorUpdateMode.Normal;
-        terrainAnim.updateMode = UnityEngine.AnimatorUpdateMode.Normal;
-        birdAnim.updateMode = UnityEngine.AnimatorUpdateMode.Normal;
+        deactivateAnims();
         Time.timeScale = 0;
     }
     
