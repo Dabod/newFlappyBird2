@@ -23,6 +23,11 @@ public class ControladorEscena : MonoBehaviour
     public GameObject bestScoreText;
     public GameObject endScoreText;
     public GameObject newBestScoreText;
+    public GameObject medalGotText;
+    //Images
+    public GameObject ScoreMedal;
+    public GameObject musicIcon;
+    public GameObject soundIcon;
     // Audio
     public AudioSource music;
     // Animators
@@ -37,10 +42,16 @@ public class ControladorEscena : MonoBehaviour
     public Sprite silverMedal;
     public Sprite goldMedal;
     public Sprite platinumMedal;
+    public Sprite musicOnIcon;
+    public Sprite musicOffIcon;
+    public Sprite soundOnIcon;
+    public Sprite soundOffIcon;
     // Booleans
     public static bool btnPulsado = false;
     public static bool paused = false;
     public static bool playing;
+    public static bool musicOn = true;
+    public static bool soundOn = true;
 
     // Start is called before the first frame update
     void Start()
@@ -87,6 +98,8 @@ public class ControladorEscena : MonoBehaviour
     {
         if (!paused)
         {
+            music.Pause();
+            canvasPauseMenu.SetActive(true);
             paused = true;
             Time.timeScale = 0;
             deactivateAnims();
@@ -94,6 +107,8 @@ public class ControladorEscena : MonoBehaviour
         }
         else
         {
+            music.Play();
+            canvasPauseMenu.SetActive(false);
             Time.timeScale = 1;
             activateAnims();
             botonPause.GetComponent<UnityEngine.UI.Image>().sprite = pauseSprite;
@@ -114,6 +129,7 @@ public class ControladorEscena : MonoBehaviour
         }
         endScoreText.GetComponent<TextMeshProUGUI>().text = LogicaPuntuacion.score.ToString();
         bestScoreText.GetComponent<TextMeshProUGUI>().text = PlayerDataController.highScore.ToString();
+        medalAwardDisplay();
         //Canvas swap
         canvasGameplay.SetActive(false);
         canvasGameOver.SetActive(true);
@@ -123,6 +139,59 @@ public class ControladorEscena : MonoBehaviour
         deactivateAnims();
         Time.timeScale = 0;
     }
+
+    void medalAwardDisplay()
+    {
+        if (LogicaPuntuacion.score > 24)
+        {
+            ScoreMedal.SetActive(true);
+            medalGotText.SetActive(true);
+            if(LogicaPuntuacion.score > 99)
+            {
+                ScoreMedal.GetComponent<UnityEngine.UI.Image>().sprite = platinumMedal;
+            }
+            else if(LogicaPuntuacion.score > 74)
+            {
+                ScoreMedal.GetComponent<UnityEngine.UI.Image>().sprite = goldMedal;
+            }
+            else if (LogicaPuntuacion.score > 49)
+            {
+                ScoreMedal.GetComponent<UnityEngine.UI.Image>().sprite = silverMedal;
+            }
+        }
+    }
+
+    //public void MusicOnOff()
+    //{
+    //    if (musicOn)
+    //    {
+    //    music.GetComponent<AudioSource>().volume = 0f;
+    //    musicIcon.GetComponent<UnityEngine.UI.Image>().sprite = musicOffIcon;
+    //    musicOn = false;
+    //    }
+    //    else
+    //    {
+    //        music.GetComponent<AudioSource>().volume = 0.75f;
+    //        musicIcon.GetComponent<UnityEngine.UI.Image>().sprite = musicOnIcon;
+    //        musicOn = true;
+    //    }
+    //}
+
+    //public void SoundOnOff()
+    //{
+    //    if (soundOn)
+    //    {
+    //        LogicaAreaPuntuacion.puntSonido.GetComponent<AudioSource>().volume = 0f;
+    //        soundIcon.GetComponent<UnityEngine.UI.Image>().sprite = soundOffIcon;
+    //        soundOn = false;
+    //    }
+    //    else
+    //    {
+    //        LogicaAreaPuntuacion.puntSonido.GetComponent<AudioSource>().volume = 0.75f;
+    //        soundIcon.GetComponent<UnityEngine.UI.Image>().sprite = soundOnIcon;
+    //        soundOn = true;
+    //    }
+    //}
     
     public void Reiniciar()
     {
