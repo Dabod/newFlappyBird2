@@ -24,12 +24,13 @@ public class ControladorEscena : MonoBehaviour
     public GameObject endScoreText;
     public GameObject newBestScoreText;
     public GameObject medalGotText;
-    //Images
+    // Images
     public GameObject ScoreMedal;
     public GameObject musicIcon;
     public GameObject soundIcon;
     // Audio
     public AudioSource music;
+    public AudioSource sonidoPunt;
     // Animators
     public Animator bckLyrAnim;
     public Animator mdlLyrAnim;
@@ -53,10 +54,12 @@ public class ControladorEscena : MonoBehaviour
     public static bool musicOn = true;
     public static bool soundOn = true;
 
+
     // Start is called before the first frame update
     void Start()
     {
         Time.timeScale = 0;
+        loadPlayerData();
         playing = false;
     }
 
@@ -71,6 +74,29 @@ public class ControladorEscena : MonoBehaviour
         canvasGameplay.SetActive(true);
         canvasMenu.SetActive(false);
         botonPlay.SetActive(false);
+    }
+
+    void loadPlayerData()
+    {
+        PlayerDataController.highScore = PlayerPrefs.GetInt("highScore", 0);
+        musicOn = intToBool(PlayerPrefs.GetInt("musicOn", 1));
+
+        // Aplicamos los cambios a la musica y al sprite de su botón.
+        if (musicOn)
+        {
+            music.volume = 0.75f;
+            musicIcon.GetComponent<UnityEngine.UI.Image>().sprite = musicOnIcon;
+        }
+        else
+        {
+            music.volume = 0f;
+            musicIcon.GetComponent<UnityEngine.UI.Image>().sprite = musicOffIcon;
+        }
+
+        // Aplicamos los cambios al sprite del botón sonido ya que el bool es suficiente para que surja efecto.
+        soundOn = intToBool(PlayerPrefs.GetInt("soundOn", 1));
+        if(soundOn) soundIcon.GetComponent<UnityEngine.UI.Image>().sprite = soundOnIcon;
+        else soundIcon.GetComponent<UnityEngine.UI.Image>().sprite = soundOffIcon;
     }
 
     public void ButtonPressed()
@@ -161,38 +187,56 @@ public class ControladorEscena : MonoBehaviour
         }
     }
 
-    //public void MusicOnOff()
-    //{
-    //    if (musicOn)
-    //    {
-    //    music.GetComponent<AudioSource>().volume = 0f;
-    //    musicIcon.GetComponent<UnityEngine.UI.Image>().sprite = musicOffIcon;
-    //    musicOn = false;
-    //    }
-    //    else
-    //    {
-    //        music.GetComponent<AudioSource>().volume = 0.75f;
-    //        musicIcon.GetComponent<UnityEngine.UI.Image>().sprite = musicOnIcon;
-    //        musicOn = true;
-    //    }
-    //}
+    public void MusicOnOff()
+    {
+        if (musicOn)
+        {
+            music.volume = 0f;
+            musicIcon.GetComponent<UnityEngine.UI.Image>().sprite = musicOffIcon;
+            musicOn = false;
+        }
+        else
+        {
+            music.volume = 0.75f;
+            musicIcon.GetComponent<UnityEngine.UI.Image>().sprite = musicOnIcon;
+            musicOn = true;
+        }
 
-    //public void SoundOnOff()
-    //{
-    //    if (soundOn)
-    //    {
-    //        LogicaAreaPuntuacion.puntSonido.GetComponent<AudioSource>().volume = 0f;
-    //        soundIcon.GetComponent<UnityEngine.UI.Image>().sprite = soundOffIcon;
-    //        soundOn = false;
-    //    }
-    //    else
-    //    {
-    //        LogicaAreaPuntuacion.puntSonido.GetComponent<AudioSource>().volume = 0.75f;
-    //        soundIcon.GetComponent<UnityEngine.UI.Image>().sprite = soundOnIcon;
-    //        soundOn = true;
-    //    }
-    //}
-    
+        PlayerPrefs.SetInt("musicOn", boolToInt(musicOn));
+    }
+
+    public void SoundOnOff()
+    {
+        if (soundOn)
+        {
+            soundIcon.GetComponent<UnityEngine.UI.Image>().sprite = soundOffIcon;
+            soundOn = false;
+        }
+        else
+        {
+            soundIcon.GetComponent<UnityEngine.UI.Image>().sprite = soundOnIcon;
+            soundOn = true;
+        }
+
+        PlayerPrefs.SetInt("soundOn", boolToInt(soundOn));
+    }
+
+    int boolToInt(bool val)
+    {
+        if (val)
+            return 1;
+        else
+            return 0;
+    }
+
+    bool intToBool(int val)
+    {
+        if (val != 0)
+            return true;
+        else
+            return false;
+    }
+
     public void Reiniciar()
     {
         SceneManager.LoadScene(0);

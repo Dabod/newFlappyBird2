@@ -12,9 +12,9 @@ public class LogicaGeneradorObstaculos : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //GameObject obstaculoNuevo = Instantiate(obstaculo);
-        //obstaculoNuevo.transform.position = transform.position + new Vector3(0, 0, 0);
-        //Destroy(obstaculoNuevo, 10);
+        GameObject obstaculoNuevo = Instantiate(obstaculo);
+        obstaculoNuevo.transform.position = transform.position + new Vector3(0, 0, 0);
+        Destroy(obstaculoNuevo, 5);
     }
 
     // Update is called once per frame

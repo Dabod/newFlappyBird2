@@ -29,11 +29,8 @@ public class LogicaPersonaje : MonoBehaviour
                 {
                     rb.velocity = Vector2.up * velocity;
                     animator.SetTrigger("Tap");
-
-                    
                 }
             }
-
         }
         else
         {
