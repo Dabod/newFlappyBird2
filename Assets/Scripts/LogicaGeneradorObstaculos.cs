@@ -7,14 +7,15 @@ public class LogicaGeneradorObstaculos : MonoBehaviour
     public float intervalo = 1;
     private float tiempoInicial = 0;
     public GameObject obstaculo;
+    public GameObject obstaculoFacil;
     public float altura;
 
     // Start is called before the first frame update
     void Start()
     {
-        GameObject obstaculoNuevo = Instantiate(obstaculo);
-        obstaculoNuevo.transform.position = transform.position + new Vector3(0, 0, 0);
-        Destroy(obstaculoNuevo, 5);
+        //    obstaculoNuevo = Instantiate(obstaculo);
+        //    obstaculoNuevo.transform.position = transform.position + new Vector3(0, 0, 0);
+        //    Destroy(obstaculoNuevo, 5);
     }
 
     // Update is called once per frame
@@ -22,9 +23,19 @@ public class LogicaGeneradorObstaculos : MonoBehaviour
     {
         if (tiempoInicial > intervalo)
         {
-            GameObject obstaculoNuevo = Instantiate(obstaculo);
-            obstaculoNuevo.transform.position = transform.position + new Vector3(0, Random.Range(-altura, altura), 0);
-            Destroy(obstaculoNuevo, 5);
+            GameObject obstaculoNuevo;
+            if (PlayerDataController.difficulty == 1)
+            {
+                obstaculoNuevo = Instantiate(obstaculoFacil);
+                obstaculoNuevo.transform.position = transform.position + new Vector3(0, Random.Range(-altura, altura), 0);
+                Destroy(obstaculoNuevo, 5);
+            }
+            else
+            {
+                obstaculoNuevo = Instantiate(obstaculo);
+                obstaculoNuevo.transform.position = transform.position + new Vector3(0, Random.Range(-altura, altura), 0);
+                Destroy(obstaculoNuevo, 5);
+            }
             tiempoInicial = 0;
         }
         else
