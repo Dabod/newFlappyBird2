@@ -10,12 +10,16 @@ public class ControladorEscena : MonoBehaviour
     public GameObject pj;
     public GameObject pjMenuAnimation;
     // HUD
-    public GameObject canvasMenu;
+    public GameObject canvasTitle;
     public GameObject canvasGameplay;
     public GameObject canvasPauseMenu;
     public GameObject canvasGameOver;
+    public GameObject canvasDificultad;
+    public GameObject canvasDisplayDificultad;
     // Buttons
-    public GameObject botonPlay;
+    public GameObject canvasMainMenu;
+    public GameObject playBtn;
+    public GameObject difficultyBtn;
     public GameObject botonPause;
     public GameObject botonMenu;
     public GameObject botonPlayAgain;
@@ -24,6 +28,7 @@ public class ControladorEscena : MonoBehaviour
     public GameObject endScoreText;
     public GameObject newBestScoreText;
     public GameObject medalGotText;
+    public GameObject difficultyDisplayText;
     // Images
     public GameObject ScoreMedal;
     public GameObject musicIcon;
@@ -72,16 +77,21 @@ public class ControladorEscena : MonoBehaviour
         Time.timeScale = 1;
         music.Play();
         canvasGameplay.SetActive(true);
-        canvasMenu.SetActive(false);
-        botonPlay.SetActive(false);
+        canvasTitle.SetActive(false);
+        canvasMainMenu.SetActive(false);
     }
 
     void loadPlayerData()
     {
+        PlayerDataController.difficulty = PlayerPrefs.GetInt("difficulty", 1);
         PlayerDataController.highScore = PlayerPrefs.GetInt("highScore", 0);
         musicOn = intToBool(PlayerPrefs.GetInt("musicOn", 1));
 
-        // Aplicamos los cambios a la musica y al sprite de su botón.
+        // Aplicamos los cambios necesarios basandonos en los playerPrefs.
+        if (PlayerDataController.difficulty == 1) difficultyDisplayText.GetComponent<TextMeshProUGUI>().text = "Current: Easy";
+        if (PlayerDataController.difficulty == 2) difficultyDisplayText.GetComponent<TextMeshProUGUI>().text = "Current: Normal";
+        if (PlayerDataController.difficulty == 3) difficultyDisplayText.GetComponent<TextMeshProUGUI>().text = "Current: Hard";
+
         if (musicOn)
         {
             music.volume = 0.75f;
@@ -164,6 +174,50 @@ public class ControladorEscena : MonoBehaviour
         //Animation Stop
         deactivateAnims();
         Time.timeScale = 0;
+    }
+
+    public void difficultyMenu()
+    {
+        playBtn.SetActive(false);
+        difficultyBtn.SetActive(false);
+        canvasDisplayDificultad.SetActive(false);
+        canvasDificultad.SetActive(true);
+    }
+
+    public void easyDifficulty()
+    {
+        PlayerDataController.difficulty = 1;
+        PlayerPrefs.SetInt("difficulty", PlayerDataController.difficulty);
+        PlayerPrefs.Save();
+        if (PlayerDataController.difficulty == 1) difficultyDisplayText.GetComponent<TextMeshProUGUI>().text = "Current: Easy";
+        canvasDificultad.SetActive(false);
+        playBtn.SetActive(true);
+        difficultyBtn.SetActive(true);
+        canvasDisplayDificultad.SetActive(true);
+    }
+
+    public void normalDifficulty()
+    {
+        PlayerDataController.difficulty = 2;
+        PlayerPrefs.SetInt("difficulty", PlayerDataController.difficulty);
+        PlayerPrefs.Save();
+        if (PlayerDataController.difficulty == 2) difficultyDisplayText.GetComponent<TextMeshProUGUI>().text = "Current: Normal";
+        canvasDificultad.SetActive(false);
+        playBtn.SetActive(true);
+        difficultyBtn.SetActive(true);
+        canvasDisplayDificultad.SetActive(true);
+    }
+
+    public void hardDifficulty()
+    {
+        PlayerDataController.difficulty = 3;
+        PlayerPrefs.SetInt("difficulty", PlayerDataController.difficulty);
+        PlayerPrefs.Save();
+        if (PlayerDataController.difficulty == 3) difficultyDisplayText.GetComponent<TextMeshProUGUI>().text = "Current: Hard";
+        canvasDificultad.SetActive(false);
+        playBtn.SetActive(true);
+        difficultyBtn.SetActive(true);
+        canvasDisplayDificultad.SetActive(true);
     }
 
     void medalAwardDisplay()
